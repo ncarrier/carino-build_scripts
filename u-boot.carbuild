@@ -8,9 +8,9 @@ mkdir -p ${build_dir}
 # use the default u-boot pcduino3 configuration
 cd ${PACKAGES_DIR}/${package_name}
 # TODO update the config only if needed
-make CROSS_COMPILE=${TOOLCHAIN_PREFIX} \
-		   Linksprite_pcDuino3_config \
-		   O=${build_dir}
+#make CROSS_COMPILE=${TOOLCHAIN_PREFIX} \
+#		   Linksprite_pcDuino3_config \
+#		   O=${build_dir}
 
 # do build
 make CROSS_COMPILE=${TOOLCHAIN_PREFIX} \

@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# the relevant files are contained in the libc6-dev-armhf-cross package
+mkdir -p ${FINAL_DIR}/lib/
+
+# copy all the needed libc's shared objects
+shared_objects=" \
+	ld-2.13.so \
+	libcrypt-2.13.so \
+	libc-2.13.so \
+	libdl-2.13.so \
+	libgcc_s.so.1 \
+	libgomp.so.1.0.0 \
+	libm-2.13.so \
+	libpthread-2.13.so \
+	libresolv-2.13.so \
+	librt-2.13.so \
+	libutil-2.13.so"
+
+for so in ${shared_objects}; do
+	cp ${LIBC_DIR}/${so} ${FINAL_DIR}/lib/${so}
+done
+
+# create the needed links
+cd ${FINAL_DIR}/lib/
+ln -sf ld-2.13.so ld-linux-armhf.so.3
+ln -sf ld-linux.so.3 ld-linux-armhf.so.3
+
+ln -sf libc-2.13.so libc.so.6
+
+ln -sf libcrypt-2.13.so libcrypt.so.1
+ln -sf libcrypt.so libcrypt.so.1
+
+ln -sf libdl-2.13.so libdl.so.2
+ln -sf libdl.so libdl.so.2
+
+ln -sf libgomp.so.1.0.0 libgomp.so.1
+
+ln -sf libm-2.13.so libm.so.6
+ln -sf libm.so.6 libm.so
+
+ln -sf libpthread-2.13.so libpthread.so.0
+
+ln -sf libresolv-2.13.so libresolv.so.2
+ln -sf libresolv-2.13.so.2 libresolv.so
+
+ln -sf librt-2.13.so librt.so.1
+ln -sf librt-2.13.so.1 librt.so
+
+ln -sf libutil-2.13.so libutil.so.1
+ln -sf libutil-2.13.so.1 libutil.so
+

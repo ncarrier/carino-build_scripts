@@ -1,0 +1,29 @@
+#!/bin/bash
+
+package_name=openssl
+
+build_dir=${BUILD_DIR}/${package_name}
+src_dir=${build_dir}/openssl-1.0.1k
+mkdir -p ${build_dir}
+cd ${build_dir}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${package_name}/openssl-1.0.1k.tar.gz
+cd ${src_dir}
+
+# configure
+TARGETMACH=${TOOLCHAIN_PREFIX} \
+	CROSS=${TOOLCHAIN_PREFIX} \
+	CC=${TOOLCHAIN_PREFIX}-gcc \
+	LD=${TOOLCHAIN_PREFIX}-ld \
+	AS=${TOOLCHAIN_PREFIX}-as \
+	AR=${TOOLCHAIN_PREFIX}-ar \
+	./Configure --openssldir=${STAGING_DIR} shared \
+		os/compiler:${TOOLCHAIN_PREFIX}
+
+# do build
+make
+make install
+
+# for now, I don't think an installation in final is required
+# TODO confirm that

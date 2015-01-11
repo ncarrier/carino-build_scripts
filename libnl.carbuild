@@ -30,14 +30,14 @@ cp ${STAGING_DIR}/lib/libnl-idiag-3.so.200.20.0 .
 cp ${STAGING_DIR}/lib/libnl-nf-3.so.200.20.0 .
 cp ${STAGING_DIR}/lib/libnl-route-3.so.200.20.0 .
 
-ln -sf ${STAGING_DIR}/lib/libnl-3.so.200.20.0 libnl-3.so.200
-ln -sf ${STAGING_DIR}/lib/libnl-genl-3.so.200.20.0 libnl-genl-3.so.200
-ln -sf ${STAGING_DIR}/lib/libnl-idiag-3.so.200.20.0 libnl-idiag-3.so.200
-ln -sf ${STAGING_DIR}/lib/libnl-nf-3.so.200.20.0 libnl-nf-3.so.200
-ln -sf ${STAGING_DIR}/lib/libnl-route-3.so.200.20.0 libnl-route-3.so.200
-ln -sf ${STAGING_DIR}/lib/libnl-3.so.200.20.0 libnl-3.so
-ln -sf ${STAGING_DIR}/lib/libnl-genl-3.so.200.20.0 libnl-genl-3.so
-ln -sf ${STAGING_DIR}/lib/libnl-idiag-3.so.200.20.0 libnl-idiag-3.so
-ln -sf ${STAGING_DIR}/lib/libnl-nf-3.so.200.20.0 libnl-nf-3.so
-ln -sf ${STAGING_DIR}/lib/libnl-route-3.so.200.20.0 libnl-route-3.so
+ln -sf libnl-3.so.200.20.0 libnl-3.so.200
+ln -sf libnl-genl-3.so.200.20.0 libnl-genl-3.so.200
+ln -sf libnl-idiag-3.so.200.20.0 libnl-idiag-3.so.200
+ln -sf libnl-nf-3.so.200.20.0 libnl-nf-3.so.200
+ln -sf libnl-route-3.so.200.20.0 libnl-route-3.so.200
+ln -sf libnl-3.so.200.20.0 libnl-3.so
+ln -sf libnl-genl-3.so.200.20.0 libnl-genl-3.so
+ln -sf libnl-idiag-3.so.200.20.0 libnl-idiag-3.so
+ln -sf libnl-nf-3.so.200.20.0 libnl-nf-3.so
+ln -sf libnl-route-3.so.200.20.0 libnl-route-3.so
 

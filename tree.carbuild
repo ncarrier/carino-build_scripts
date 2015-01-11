@@ -12,7 +12,7 @@ tar xf ${PACKAGES_DIR}/archives/${package_name}/tree-1.7.0.tgz
 
 # do build
 cd ${src_dir}
-make CC=${TOOLCHAIN_PREFIX}gcc
+make CC=${TOOLCHAIN_PREFIX}-gcc
 
 cp tree ${FINAL_DIR}/usr/bin/
 

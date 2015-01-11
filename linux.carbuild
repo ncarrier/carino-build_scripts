@@ -10,11 +10,11 @@ cp ${CONFIG_DIR}/kernel_config ${build_dir}/.config
 
 # do build
 cd ${PACKAGES_DIR}/${package_name}
-ARCH=arm CROSS_COMPILE=${TOOLCHAIN_PREFIX} \
+ARCH=arm CROSS_COMPILE=${TOOLCHAIN_PREFIX}- \
      LOADADDR=0x40008000 \
      INSTALL_MOD_PATH=${FINAL_DIR}/ \
      make uImage dtbs dep modules O=${build_dir} -j 8
-ARCH=arm CROSS_COMPILE=${TOOLCHAIN_PREFIX} \
+ARCH=arm CROSS_COMPILE=${TOOLCHAIN_PREFIX}- \
      LOADADDR=0x40008000 \
      INSTALL_MOD_PATH=${FINAL_DIR}/ \
      make modules_install O=${build_dir} -j 8

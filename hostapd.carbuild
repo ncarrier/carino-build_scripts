@@ -1,0 +1,27 @@
+#!/bin/bash
+
+package_name=hostapd
+
+build_dir=${BUILD_DIR}/${package_name}
+src_dir=${build_dir}/hostapd-2.3/hostapd
+mkdir -p ${build_dir}
+cd ${build_dir}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${package_name}/hostapd-2.3.tar.gz
+cd ${src_dir}
+
+# use the versionned hostapd configuration
+cp ${CONFIG_DIR}/hostapd_config .config
+
+# do build
+CFLAGS="-I${STAGING_DIR}/include/libnl3/ -I${STAGING_DIR}/include/" \
+	LDFLAGS="-L${STAGING_DIR}/lib/" \
+	make CC=${TOOLCHAIN_PREFIX}-gcc -j8
+
+make install DESTDIR=${STAGING_DIR}
+
+# install in final
+mkdir -p ${FINAL_DIR}/sbin/
+cp -pf ${STAGING_DIR}/usr/local/bin/hostapd ${FINAL_DIR}/sbin/
+cp -pf ${STAGING_DIR}/usr/local/bin/hostapd_cli ${FINAL_DIR}/sbin/

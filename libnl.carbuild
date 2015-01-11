@@ -1,0 +1,43 @@
+#!/bin/bash
+
+package_name=libnl
+
+build_dir=${BUILD_DIR}/${package_name}
+src_dir=${build_dir}/libnl-3.2.25
+mkdir -p ${build_dir}
+cd ${build_dir}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${package_name}/libnl-3.2.25.tar.gz
+cd ${src_dir}
+
+# configure
+./configure --prefix=${STAGING_DIR} --host=${TOOLCHAIN_PREFIX} \
+	--disable-cli \
+	--disable-static \
+	--disable-debug
+
+# do build
+make -j8
+make install
+
+# install all the neede bits in final
+mkdir -p ${FINAL_DIR}/lib
+cd ${FINAL_DIR}/lib
+cp ${STAGING_DIR}/lib/libnl-3.so.200.20.0 .
+cp ${STAGING_DIR}/lib/libnl-genl-3.so.200.20.0 .
+cp ${STAGING_DIR}/lib/libnl-idiag-3.so.200.20.0 .
+cp ${STAGING_DIR}/lib/libnl-nf-3.so.200.20.0 .
+cp ${STAGING_DIR}/lib/libnl-route-3.so.200.20.0 .
+
+ln -sf ${STAGING_DIR}/lib/libnl-3.so.200.20.0 libnl-3.so.200
+ln -sf ${STAGING_DIR}/lib/libnl-genl-3.so.200.20.0 libnl-genl-3.so.200
+ln -sf ${STAGING_DIR}/lib/libnl-idiag-3.so.200.20.0 libnl-idiag-3.so.200
+ln -sf ${STAGING_DIR}/lib/libnl-nf-3.so.200.20.0 libnl-nf-3.so.200
+ln -sf ${STAGING_DIR}/lib/libnl-route-3.so.200.20.0 libnl-route-3.so.200
+ln -sf ${STAGING_DIR}/lib/libnl-3.so.200.20.0 libnl-3.so
+ln -sf ${STAGING_DIR}/lib/libnl-genl-3.so.200.20.0 libnl-genl-3.so
+ln -sf ${STAGING_DIR}/lib/libnl-idiag-3.so.200.20.0 libnl-idiag-3.so
+ln -sf ${STAGING_DIR}/lib/libnl-nf-3.so.200.20.0 libnl-nf-3.so
+ln -sf ${STAGING_DIR}/lib/libnl-route-3.so.200.20.0 libnl-route-3.so
+

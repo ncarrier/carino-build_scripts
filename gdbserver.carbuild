@@ -1,0 +1,21 @@
+#!/bin/bash
+
+package_name=gdbserver
+
+build_dir=${BUILD_DIR}/${package_name}
+src_dir=${build_dir}/gdb-7.8/gdb/gdbserver
+mkdir -p ${build_dir}
+cd ${build_dir}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${package_name}/gdb-7.8.tar.xz
+cd ${src_dir}
+
+# configure
+./configure --prefix=${STAGING_DIR} --host=${TOOLCHAIN_PREFIX}
+
+# do build
+make -j8
+
+cp gdbserver ${FINAL_DIR}/bin/
+

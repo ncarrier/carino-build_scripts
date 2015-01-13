@@ -1,0 +1,27 @@
+#!/bin/bash
+
+package_name=zlib
+
+build_dir=${BUILD_DIR}/${package_name}
+src_dir=${build_dir}/zlib-1.2.8
+mkdir -p ${build_dir}
+cd ${build_dir}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${package_name}/zlib-1.2.8.tar.gz
+cd ${src_dir}
+
+# configure
+CC=arm-linux-gnueabihf-gcc ./configure --prefix=${STAGING_DIR}
+
+# do build
+make -j8
+make install
+
+# install all the neede bits in final
+mkdir -p ${FINAL_DIR}/lib
+cd ${FINAL_DIR}/lib
+cp ${STAGING_DIR}/lib/libz.so.1.2.8 .
+
+ln -sf libz.so.1.2.8 libz.so.1
+ln -sf libz.so.1.2.8 libz.so

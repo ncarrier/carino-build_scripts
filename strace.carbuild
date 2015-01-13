@@ -1,0 +1,21 @@
+#!/bin/bash
+
+package_name=strace
+
+build_dir=${BUILD_DIR}/${package_name}
+src_dir=${build_dir}/strace-4.9
+mkdir -p ${build_dir}
+cd ${build_dir}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${package_name}/strace-4.9.tar.xz
+cd ${src_dir}
+
+# configure
+./configure --prefix=${STAGING_DIR} --host=${TOOLCHAIN_PREFIX}
+
+# do build
+make CC=${TOOLCHAIN_PREFIX}-gcc -j8
+
+cp strace ${FINAL_DIR}/usr/bin/
+

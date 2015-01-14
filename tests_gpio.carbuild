@@ -1,0 +1,16 @@
+#!/bin/bash
+
+package_name=tests_gpio
+
+build_dir=${BUILD_DIR}/${package_name}
+dest_dir=${FINAL_DIR}/usr/bin
+mkdir -p ${build_dir} ${dest_dir}
+
+# do build, directly in final, there are no intermediate build files and nothing
+# produced is interesting for other packages
+cd ${PACKAGES_DIR}/tests/gpio
+${TOOLCHAIN_PREFIX}-gcc \
+		-Wall -Werror \
+		-O0 -g \
+		main.c \
+		-o ${dest_dir}/${package_name}

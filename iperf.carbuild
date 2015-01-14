@@ -1,0 +1,26 @@
+#!/bin/bash
+
+package_name=iperf
+
+build_dir=${BUILD_DIR}/${package_name}
+src_dir=${build_dir}/iperf-3.0.11
+mkdir -p ${build_dir}
+cd ${build_dir}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${package_name}/iperf-3.0.11.tar.gz
+cd ${src_dir}
+
+# configure
+./configure --prefix=${STAGING_DIR} --host=${TOOLCHAIN_PREFIX}
+
+# do build
+make CC=${TOOLCHAIN_PREFIX}-gcc -j8
+make install
+
+# install in final
+mkdir -p ${FINAL_DIR}/bin/ ${FINAL_DIR}/lib/
+cp ${STAGING_DIR}/bin/iperf3 ${FINAL_DIR}/bin/
+cp ${STAGING_DIR}/lib/libiperf.so.0.0.0 ${FINAL_DIR}/lib/
+ln -sf libiperf.so.0.0.0 ${FINAL_DIR}/lib/libiperf.so.0
+ln -sf libiperf.so.0.0.0 ${FINAL_DIR}/lib/libiperf.so

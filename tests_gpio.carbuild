@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 package_name=tests_gpio
 
 build_dir=${BUILD_DIR}/${package_name}
@@ -13,4 +15,7 @@ ${TOOLCHAIN_PREFIX}-gcc \
 		-Wall -Werror \
 		-O0 -g \
 		main.c \
+		-L ${STAGING_DIR}/usr/lib/ \
+		-I ${STAGING_DIR}/usr/include/ \
+		-l arduino \
 		-o ${dest_dir}/${package_name}

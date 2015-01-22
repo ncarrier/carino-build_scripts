@@ -14,7 +14,6 @@ mkdir -p ${build_dir} \
 
 # do build
 cd ${PACKAGES_DIR}/tests/libarduino/src
-ls -lsa
 ${TOOLCHAIN_PREFIX}-gcc \
 		-Wall -Werror \
 		-O0 -g \

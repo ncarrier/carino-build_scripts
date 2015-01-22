@@ -1,0 +1,27 @@
+#!/bin/bash
+
+package_name=pcre2
+
+build_dir=${BUILD_DIR}/${package_name}
+version=10.00
+src_dir=${build_dir}/${package_name}-${version}
+mkdir -p ${build_dir}
+cd ${build_dir}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${package_name}/${package_name}-${version}.tar.bz2
+cd ${src_dir}
+
+# configure
+./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf
+
+# do build
+make -j8
+make install
+
+# install .so and links in final
+mkdir -p ${FINAL_DIR}/lib
+cd ${STAGING_DIR}/lib
+
+shared_objects=$(ls libpcre2* | egrep --invert-match '\.a$|\.o|pkgconfig|\.la$')
+cp --archive --force --verbose ${shared_objects} ${FINAL_DIR}/lib/

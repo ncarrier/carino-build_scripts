@@ -5,12 +5,10 @@ set -e
 package_name=libarduino
 
 build_dir=${BUILD_DIR}/${package_name}
-rel_dest_dir=usr/lib
-rel_head_dest_dir=usr/include
+rel_dest_dir=lib
 mkdir -p ${build_dir} \
 		${FINAL_DIR}/${rel_dest_dir} \
 		${STAGING_DIR}/${rel_dest_dir} \
-		${STAGING_DIR}/${rel_head_dest_dir}
 
 # do build
 cd ${PACKAGES_DIR}/tests/libarduino/src
@@ -27,4 +25,4 @@ ${TOOLCHAIN_PREFIX}-gcc \
 # install
 cp -f ${STAGING_DIR}/${rel_dest_dir}/${package_name}.so \
 	${FINAL_DIR}/${rel_dest_dir}/${package_name}.so
-cp -rpf ${PACKAGES_DIR}/tests/libarduino/include ${STAGING_DIR}/usr/
+cp -rpf ${PACKAGES_DIR}/tests/libarduino/include ${STAGING_DIR}

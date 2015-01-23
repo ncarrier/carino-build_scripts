@@ -15,7 +15,7 @@ ${TOOLCHAIN_PREFIX}-gcc \
 		-Wall -Werror \
 		-O0 -g \
 		main.c \
-		-L ${STAGING_DIR}/usr/lib/ \
-		-I ${STAGING_DIR}/usr/include/ \
+		-L ${STAGING_DIR}/lib/ \
+		-I ${STAGING_DIR}/include/ \
 		-l arduino \
 		-o ${dest_dir}/${package_name}

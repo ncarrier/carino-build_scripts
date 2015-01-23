@@ -1,9 +1,11 @@
 #!/bin/bash
 
 # the relevant files are contained in the libc6-dev-armhf-cross package
+mkdir -p ${STAGING_DIR}/lib/
 mkdir -p ${FINAL_DIR}/lib/
 
 cd ${LIBC_DIR}
 shared_objects=$(ls | egrep --invert-match '.a$|\.o$')
+cp --archive --force --verbose ${shared_objects} ${STAGING_DIR}/lib/
 cp --archive --force --verbose ${shared_objects} ${FINAL_DIR}/lib/
 

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+package_name=libffi
+
+version=3.2.1
+src_dir=${PACKAGE_BUILD_DIR}/${package_name}-${version}
+cd ${PACKAGE_BUILD_DIR}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${package_name}/${package_name}-${version}.tar.gz
+cd ${src_dir}
+
+# configure
+./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf
+ 
+# do build
+make -j8
+make install
+
+# install .so and links in final
+mkdir -p ${FINAL_DIR}/lib
+cd ${STAGING_DIR}/lib
+
+rm libffi.la
+shared_objects=$(ls libffi.* | egrep --invert-match '\.a$|\.o|\.la$')
+cp --archive --force --verbose ${shared_objects} ${FINAL_DIR}/lib/

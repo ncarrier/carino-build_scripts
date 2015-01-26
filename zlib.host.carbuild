@@ -1,0 +1,16 @@
+#!/bin/bash
+
+version=1.2.8
+src_dir=${PACKAGE_BUILD_DIR}/${PACKAGE_NAME}-${version}
+cd ${PACKAGE_BUILD_DIR}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.gz
+cd ${src_dir}
+
+# configure
+./configure --prefix=${STAGING_HOST_DIR}
+
+# do build
+make -j8
+make install

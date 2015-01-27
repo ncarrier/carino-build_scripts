@@ -8,15 +8,12 @@
 # a configure script would have been nice, but I can't do that since It would
 # involve getting sure the source have been unpacked before
 
-package_name=busybox
-
-build_dir=${BUILD_DIR}/${package_name}
-src_dir=${build_dir}/busybox-1.23.0
-mkdir -p ${build_dir}
-cd ${build_dir}
+version=1.23.0
+src_dir=${PACKAGE_BUILD_DIR}/${PACKAGE_NAME}-${version}
+cd ${PACKAGE_BUILD_DIR}
 
 # extract
-tar xf ${PACKAGES_DIR}/archives/${package_name}/busybox-1.23.0.tar.bz2
+tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.bz2
 mkdir -p build
 cd build
 

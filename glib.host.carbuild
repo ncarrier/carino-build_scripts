@@ -1,0 +1,33 @@
+#!/bin/bash
+
+version=2.42.1
+src_dir=${PACKAGE_BUILD_DIR}/${PACKAGE_NAME}-${version}
+cd ${PACKAGE_BUILD_DIR}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.xz
+cd ${src_dir}
+
+# config
+./configure --prefix=${STAGING_HOST_DIR} \
+	--with-sysroot=${STAGING_HOST_DIR} \
+	--disable-maintainer-mode \
+	--disable-selinux \
+	--disable-libelf \
+	--disable-fam \
+	--disable-gtk-doc \
+	--disable-gtk-doc-html \
+	--disable-gtk-doc-pdf \
+	--disable-man \
+	--disable-nls \
+	--disable-dtrace \
+	--disable-systemtap \
+	glib_cv_stack_grows=no \
+	glib_cv_uscore=no \
+	ac_cv_func_posix_getpwuid_r=yes \
+	ac_cv_func_posix_getgrgid_r=yes
+
+# build host tools
+make -j8 V=1
+make install
+

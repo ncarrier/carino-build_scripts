@@ -1,14 +1,11 @@
 #!/bin/bash
 
-package_name=openssl
-
-build_dir=${BUILD_DIR}/${package_name}
-src_dir=${build_dir}/openssl-1.0.1k
-mkdir -p ${build_dir}
-cd ${build_dir}
+version=1.0.1k
+src_dir=${PACKAGE_BUILD_DIR}/${PACKAGE_NAME}-${version}
+cd ${PACKAGE_BUILD_DIR}
 
 # extract
-tar xf ${PACKAGES_DIR}/archives/${package_name}/openssl-1.0.1k.tar.gz
+tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.gz
 cd ${src_dir}
 
 # configure
@@ -18,12 +15,16 @@ TARGETMACH=${TOOLCHAIN_PREFIX} \
 	LD=${TOOLCHAIN_PREFIX}-ld \
 	AS=${TOOLCHAIN_PREFIX}-as \
 	AR=${TOOLCHAIN_PREFIX}-ar \
-	./Configure --openssldir=${STAGING_DIR} shared \
-		os/compiler:${TOOLCHAIN_PREFIX}
+	./Configure linux-generic32 -DL_ENDIAN ${CFLAGS} shared \
+		--prefix=${STAGING_DIR}
 
 # do build
 make
-make install
+make install_sw
 
-# for now, I don't think an installation in final is required
-# TODO confirm that
+# install .so and links in final
+mkdir -p ${FINAL_DIR}/lib
+cd ${STAGING_DIR}/lib
+
+shared_objects=$(ls libssl* libcrypto* | egrep --invert-match '\.a$|\.o|\.la$')
+cp --archive --force --verbose ${shared_objects} ${FINAL_DIR}/lib/

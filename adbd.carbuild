@@ -1,37 +1,33 @@
 #!/bin/bash
 
-package_name=adbd
-
-build_dir=${BUILD_DIR}/${package_name}
 dest_dir=${FINAL_DIR}/sbin
-mkdir -p ${build_dir} ${dest_dir}
+mkdir -p ${dest_dir}
 
 # do build, directly in final, there are no intermediate build files and nothing
 # produced is interesting for other packages
 cd ${PACKAGES_DIR}/adbd
-CFLAGS="-O2 -g -DADB_HOST=0 -Wall -Wno-unused-parameter -DHAVE_FORKEXEC \
-	-DHAVE_SYMLINKS -D_XOPEN_SOURCE -D_GNU_SOURCE" \
-	${TOOLCHAIN_PREFIX}-gcc \
-		-Wall \
-		-O0 -g \
-		-I . \
-		adb.c \
-		fdevent.c \
-		transport.c \
-		transport_local.c \
-		transport_usb.c \
-		sockets.c \
-		services.c \
-		file_sync_service.c \
-		adb_config.c \
-		socket_local_server.c \
-		socket_loopback_server.c \
-		socket_loopback_client.c \
-		socket_local_client.c \
-		socket_inaddr_any_server.c \
-		framebuffer_service.c \
-		remount_service.c \
-		usb_linux_client.c \
-		utils.c \
-		-o ${dest_dir}/${package_name} \
-		-pthread
+${TOOLCHAIN_PREFIX}-gcc \
+	${CFLAGS} \
+	-I . \
+	-DADB_HOST=0 -DHAVE_FORKEXEC \
+	-DHAVE_SYMLINKS -D_XOPEN_SOURCE -D_GNU_SOURCE \
+	adb.c \
+	fdevent.c \
+	transport.c \
+	transport_local.c \
+	transport_usb.c \
+	sockets.c \
+	services.c \
+	file_sync_service.c \
+	adb_config.c \
+	socket_local_server.c \
+	socket_loopback_server.c \
+	socket_loopback_client.c \
+	socket_local_client.c \
+	socket_inaddr_any_server.c \
+	framebuffer_service.c \
+	remount_service.c \
+	usb_linux_client.c \
+	utils.c \
+	-o ${dest_dir}/${PACKAGE_NAME} \
+	-pthread

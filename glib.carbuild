@@ -8,19 +8,18 @@ cd ${PACKAGE_BUILD_DIR}
 tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.xz
 cd ${src_dir}
 
-# configure
-PKG_CONFIG_PATH=${STAGING_HOST_DIR}/lib/pkgconfig/ \
-PATH="${STAGING_HOST_DIR}/bin/:${PATH}" \
-LDFLAGS=-L${STAGING_DIR}/lib/ \
-CPPFLAGS="-I${STAGING_DIR}/lib/libffi-3.2.1/include/ \
-	-I${STAGING_DIR}/include/" \
+# config
 ./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf \
 	--with-sysroot=${STAGING_DIR} \
 	--disable-maintainer-mode \
 	--disable-selinux \
+	--disable-libelf \
 	--disable-fam \
+	--disable-gtk-doc \
 	--disable-gtk-doc-html \
+	--disable-gtk-doc-pdf \
 	--disable-man \
+	--disable-nls \
 	--disable-dtrace \
 	--disable-systemtap \
 	glib_cv_stack_grows=no \
@@ -29,11 +28,7 @@ CPPFLAGS="-I${STAGING_DIR}/lib/libffi-3.2.1/include/ \
 	ac_cv_func_posix_getgrgid_r=yes
 
 # do build
-PKG_CONFIG_PATH=${STAGING_HOST_DIR}/lib/pkgconfig/ \
-PATH="${STAGING_HOST_DIR}/bin/:${PATH}" \
 make -j8 V=1
-PKG_CONFIG_PATH=${STAGING_HOST_DIR}/lib/pkgconfig/ \
-PATH="${STAGING_HOST_DIR}/bin/:${PATH}" \
 make install
 
 # install .so and links in final

@@ -1,16 +1,16 @@
 #!/bin/bash
 
-package_name=glib
-
 version=2.42.1
-src_dir=${PACKAGE_BUILD_DIR}/${package_name}-${version}
+src_dir=${PACKAGE_BUILD_DIR}/${PACKAGE_NAME}-${version}
 cd ${PACKAGE_BUILD_DIR}
 
 # extract
-tar xf ${PACKAGES_DIR}/archives/${package_name}/${package_name}-${version}.tar.xz
+tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.xz
 cd ${src_dir}
 
 # configure
+PKG_CONFIG_PATH=${STAGING_HOST_DIR}/lib/pkgconfig/ \
+PATH="${STAGING_HOST_DIR}/bin/:${PATH}" \
 LDFLAGS=-L${STAGING_DIR}/lib/ \
 CPPFLAGS="-I${STAGING_DIR}/lib/libffi-3.2.1/include/ \
 	-I${STAGING_DIR}/include/" \
@@ -23,14 +23,17 @@ CPPFLAGS="-I${STAGING_DIR}/lib/libffi-3.2.1/include/ \
 	--disable-man \
 	--disable-dtrace \
 	--disable-systemtap \
-	--disable-modular-tests \
 	glib_cv_stack_grows=no \
 	glib_cv_uscore=no \
 	ac_cv_func_posix_getpwuid_r=yes \
-	ac_cv_func_posix_getgrgid_r=yes 
+	ac_cv_func_posix_getgrgid_r=yes
 
 # do build
+PKG_CONFIG_PATH=${STAGING_HOST_DIR}/lib/pkgconfig/ \
+PATH="${STAGING_HOST_DIR}/bin/:${PATH}" \
 make -j8 V=1
+PKG_CONFIG_PATH=${STAGING_HOST_DIR}/lib/pkgconfig/ \
+PATH="${STAGING_HOST_DIR}/bin/:${PATH}" \
 make install
 
 # install .so and links in final

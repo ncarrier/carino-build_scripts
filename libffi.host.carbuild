@@ -9,7 +9,7 @@ tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.g
 cd ${src_dir}
 
 # configure
-./configure --prefix=${STAGING_HOST_DIR}
+./configure --prefix=${STAGING_HOST_DIR} --cache-file=${src_dir}/config.cache
 
 # do build
 make -j8

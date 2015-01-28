@@ -11,6 +11,7 @@ cd ${src_dir}
 # configure
 CPPFLAGS="${CPPFLAGS} -I${STAGING_DIR}/lib/libffi-3.2.1/include/" \
 ./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf \
+	--config-cache \
 	--disable-maintainer-mode \
 	--disable-docbook \
 	--disable-static \

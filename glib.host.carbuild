@@ -10,6 +10,7 @@ cd ${src_dir}
 
 # config
 ./configure --prefix=${STAGING_HOST_DIR} \
+	--config-cache \
 	--with-sysroot=${STAGING_HOST_DIR} \
 	--disable-maintainer-mode \
 	--disable-selinux \

@@ -10,6 +10,7 @@ cd ${src_dir}
 
 # configure
 ./configure --prefix=${STAGING_DIR} --host=${TOOLCHAIN_PREFIX} \
+	--config-cache \
 	--disable-cli \
 	--disable-static \
 	--disable-debug

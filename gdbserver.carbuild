@@ -8,7 +8,8 @@ tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/gdb-7.8.tar.xz
 cd ${src_dir}
 
 # configure
-./configure --prefix=${STAGING_DIR} --host=${TOOLCHAIN_PREFIX}
+./configure --prefix=${STAGING_DIR} --host=${TOOLCHAIN_PREFIX} \
+	--config-cache
 
 # do build
 make -j8

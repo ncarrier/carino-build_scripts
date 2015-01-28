@@ -9,8 +9,9 @@ tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.g
 cd ${src_dir}
 
 # configure
-./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf
- 
+./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf \
+	--cache-file=${src_dir}/config.cache
+
 # do build
 make -j8 V=1
 make install
@@ -19,6 +20,5 @@ make install
 mkdir -p ${FINAL_DIR}/lib
 cd ${STAGING_DIR}/lib
 
-rm libffi.la
 shared_objects=$(ls libffi.* | egrep --invert-match '\.a$|\.o|\.la$')
 cp --archive --force --verbose ${shared_objects} ${FINAL_DIR}/lib/

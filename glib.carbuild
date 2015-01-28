@@ -10,6 +10,7 @@ cd ${src_dir}
 
 # config
 ./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf \
+	--config-cache \
 	--with-sysroot=${STAGING_DIR} \
 	--disable-maintainer-mode \
 	--disable-selinux \
@@ -19,7 +20,6 @@ cd ${src_dir}
 	--disable-gtk-doc-html \
 	--disable-gtk-doc-pdf \
 	--disable-man \
-	--disable-nls \
 	--disable-dtrace \
 	--disable-systemtap \
 	glib_cv_stack_grows=no \

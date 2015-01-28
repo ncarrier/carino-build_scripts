@@ -8,7 +8,7 @@ mkdir -p ${dest_dir}
 cd ${PACKAGES_DIR}/adbd
 ${TOOLCHAIN_PREFIX}-gcc \
 	${CFLAGS} \
-	-I . \
+	${CPPFLAGS} -I . \
 	-DADB_HOST=0 -DHAVE_FORKEXEC \
 	-DHAVE_SYMLINKS -D_XOPEN_SOURCE -D_GNU_SOURCE \
 	adb.c \
@@ -30,4 +30,5 @@ ${TOOLCHAIN_PREFIX}-gcc \
 	usb_linux_client.c \
 	utils.c \
 	-o ${dest_dir}/${PACKAGE_NAME} \
+	${LDFLAGS} \
 	-pthread

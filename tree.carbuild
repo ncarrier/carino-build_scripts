@@ -1,19 +1,17 @@
 #!/bin/bash
 
-package_name=tree
-
-build_dir=${BUILD_DIR}/${package_name}
-src_dir=${build_dir}/tree-1.7.0
-mkdir -p ${build_dir}
-cd ${build_dir}
+version=1.7.0
+src_dir=${PACKAGE_BUILD_DIR}/${PACKAGE_NAME}-${version}
+cd ${PACKAGE_BUILD_DIR}
 
 # extract
-tar xf ${PACKAGES_DIR}/archives/${package_name}/tree-1.7.0.tgz
+tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tgz
+cd ${src_dir}
 
 # do build
 cd ${src_dir}
-make CC=${TOOLCHAIN_PREFIX}-gcc
+make -j8
 
+# install in final
 mkdir -p ${FINAL_DIR}/usr/bin/
 cp tree ${FINAL_DIR}/usr/bin/
-

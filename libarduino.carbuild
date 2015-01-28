@@ -1,28 +1,20 @@
 #!/bin/bash
 
-set -e
-
-package_name=libarduino
-
-build_dir=${BUILD_DIR}/${package_name}
 rel_dest_dir=lib
-mkdir -p ${build_dir} \
-		${FINAL_DIR}/${rel_dest_dir} \
-		${STAGING_DIR}/${rel_dest_dir} \
+mkdir -p ${FINAL_DIR}/${rel_dest_dir} \
+	${STAGING_DIR}/${rel_dest_dir} \
 
 # do build
 cd ${PACKAGES_DIR}/tests/libarduino/src
-${TOOLCHAIN_PREFIX}-gcc \
-		-Wall -Werror \
-		-O0 -g \
-		-fpic \
-		-shared \
-		*.c \
-		-I ${PACKAGES_DIR}/tests/libarduino/include \
-		-pthread \
-		-o ${STAGING_DIR}/${rel_dest_dir}/${package_name}.so
+${CC} \
+	${CFLAGS} -Werror \
+	${CPPFLAGS} -I ${PACKAGES_DIR}/tests/libarduino/include \
+	-fpic -shared \
+	*.c \
+	${LDFLAGS} -pthread \
+	-o ${STAGING_DIR}/${rel_dest_dir}/${PACKAGE_NAME}.so
 
 # install
-cp -f ${STAGING_DIR}/${rel_dest_dir}/${package_name}.so \
-	${FINAL_DIR}/${rel_dest_dir}/${package_name}.so
+cp -f ${STAGING_DIR}/${rel_dest_dir}/${PACKAGE_NAME}.so \
+	${FINAL_DIR}/${rel_dest_dir}/${PACKAGE_NAME}.so
 cp -rpf ${PACKAGES_DIR}/tests/libarduino/include ${STAGING_DIR}

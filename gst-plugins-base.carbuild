@@ -1,0 +1,104 @@
+#!/bin/bash
+
+version=1.4.3
+src_dir=${PACKAGE_BUILD_DIR}/${package_name}-${version}
+cd ${PACKAGE_BUILD_DIR}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${package_name}/${package_name}-${version}.tar.xz
+cd ${src_dir}
+
+# configure
+CPPFLAGS="${CPPFLAGS} -I${STAGING_DIR}/lib/libffi-3.2.1/include/" \
+./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf \
+	--config-cache \
+	--disable-maintainer-mode \
+	--disable-gtk-doc \
+	--disable-gtk-doc-html \
+	--disable-gtk-doc-pdf \
+	--disable-examples \
+	--disable-nls \
+	--disable-static \
+	--disable-app \
+	--disable-audioconvert \
+	--disable-audiorate \
+	--disable-audiotestsrc \
+	--disable-playback \
+	--disable-audioresample \
+	--disable-subparse \
+	--disable-volume \
+	--disable-x \
+	--disable-xvideo \
+	--disable-xshm \
+	--disable-alsa \
+	--disable-cdparanoia \
+	--disable-ivorbis \
+	--disable-libvisual \
+	--disable-ogg \
+	--disable-pango \
+	--disable-theora \
+	--disable-vorbis \
+	--disable-freetypetest \
+	--enable-introspection=no \
+	--disable-valgrind
+
+# do build
+make V=1 -j8
+make install
+
+# install what's needed in final, the list has been obtained with :
+# for l in $(grep -Ev '\.(html|pc|h|png|sgml|css|devhelp2|dict|la)$' \ 
+#   out/build/gst-plugins-base/gst-plugins-base.staging_files | grep \ 
+#  -v '/share/man/'); do if [ ! -d $l ]; then echo $l; fi; done | sed \ 
+#  's#/home/nicolas/carino/out/staging/##g'
+installed_files='bin/gst-device-monitor-1.0
+	bin/gst-discoverer-1.0
+	bin/gst-play-1.0
+	lib/gstreamer-1.0/libgstadder.so
+	lib/gstreamer-1.0/libgstencodebin.so
+	lib/gstreamer-1.0/libgstgio.so
+	lib/gstreamer-1.0/libgsttcp.so
+	lib/gstreamer-1.0/libgsttypefindfunctions.so
+	lib/gstreamer-1.0/libgstvideoconvert.so
+	lib/gstreamer-1.0/libgstvideorate.so
+	lib/gstreamer-1.0/libgstvideoscale.so
+	lib/gstreamer-1.0/libgstvideotestsrc.so
+	lib/libgstallocators-1.0.so
+	lib/libgstallocators-1.0.so.0
+	lib/libgstallocators-1.0.so.0.403.0
+	lib/libgstapp-1.0.so
+	lib/libgstapp-1.0.so.0
+	lib/libgstapp-1.0.so.0.403.0
+	lib/libgstaudio-1.0.so
+	lib/libgstaudio-1.0.so.0
+	lib/libgstaudio-1.0.so.0.403.0
+	lib/libgstfft-1.0.so
+	lib/libgstfft-1.0.so.0
+	lib/libgstfft-1.0.so.0.403.0
+	lib/libgstpbutils-1.0.so
+	lib/libgstpbutils-1.0.so.0
+	lib/libgstpbutils-1.0.so.0.403.0
+	lib/libgstriff-1.0.so
+	lib/libgstriff-1.0.so.0
+	lib/libgstriff-1.0.so.0.403.0
+	lib/libgstrtp-1.0.so
+	lib/libgstrtp-1.0.so.0
+	lib/libgstrtp-1.0.so.0.403.0
+	lib/libgstrtsp-1.0.so
+	lib/libgstrtsp-1.0.so.0
+	lib/libgstrtsp-1.0.so.0.403.0
+	lib/libgstsdp-1.0.so
+	lib/libgstsdp-1.0.so.0
+	lib/libgstsdp-1.0.so.0.403.0
+	lib/libgsttag-1.0.so
+	lib/libgsttag-1.0.so.0
+	lib/libgsttag-1.0.so.0.403.0
+	lib/libgstvideo-1.0.so
+	lib/libgstvideo-1.0.so.0
+	lib/libgstvideo-1.0.so.0.403.0'
+
+cd ${STAGING_DIR}
+for f in ${installed_files}; do
+	mkdir -p ${FINAL_DIR}/$(dirname $f)
+	cp --archive --force --verbose $f ${FINAL_DIR}/$f
+done

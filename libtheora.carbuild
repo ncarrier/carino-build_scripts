@@ -1,0 +1,35 @@
+#!/bin/bash
+
+version=1.1.1
+src_dir=${PACKAGE_BUILD_DIR}/${PACKAGE_NAME}-${version}
+cd ${PACKAGE_BUILD_DIR}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.bz2
+cd ${src_dir}
+
+# configure
+./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf \
+	--cache-file=${src_dir}/config.cache \
+	--disable-examples \
+	--disable-maintainer-mode \
+	--disable-oggtest \
+	--disable-vorbistest \
+	--disable-sdltest \
+	--disable-static \
+	ac_cv_prog_HAVE_BIBTEX=no \
+	ac_cv_prog_HAVE_DOXYGEN=no \
+	ac_cv_prog_HAVE_PDFLATEX=no
+
+
+
+# do build
+make -j8 V=1
+make install
+
+# install .so and links in final
+mkdir -p ${FINAL_DIR}/lib
+cd ${STAGING_DIR}/lib
+
+shared_objects=$(ls ${PACKAGE_NAME}* | egrep --invert-match '\.a$|\.o|\.la$')
+cp --archive --force --verbose ${shared_objects} ${FINAL_DIR}/lib/

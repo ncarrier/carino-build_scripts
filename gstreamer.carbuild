@@ -18,6 +18,9 @@ CPPFLAGS="${CPPFLAGS} -I${STAGING_DIR}/lib/libffi-3.2.1/include/" \
 	--disable-gtk-doc \
 	--disable-gtk-doc-html \
 	--disable-gtk-doc-pdf \
+	--enable-theora \
+	--enable-ogg \
+	--enable-vorbis \
 	--disable-tests \
 	--disable-failing-tests \
 	--disable-examples \

@@ -32,12 +32,8 @@ CPPFLAGS="${CPPFLAGS} -I${STAGING_DIR}/lib/libffi-3.2.1/include/" \
 	--disable-xshm \
 	--disable-alsa \
 	--disable-cdparanoia \
-	--disable-ivorbis \
 	--disable-libvisual \
-	--disable-ogg \
 	--disable-pango \
-	--disable-theora \
-	--disable-vorbis \
 	--disable-freetypetest \
 	--enable-introspection=no \
 	--disable-valgrind
@@ -46,23 +42,22 @@ CPPFLAGS="${CPPFLAGS} -I${STAGING_DIR}/lib/libffi-3.2.1/include/" \
 make V=1 -j8
 make install
 
-# install what's needed in final, the list has been obtained with :
-# for l in $(grep -Ev '\.(html|pc|h|png|sgml|css|devhelp2|dict|la)$' \ 
-#   out/build/gst-plugins-base/gst-plugins-base.staging_files | grep \ 
-#  -v '/share/man/'); do if [ ! -d $l ]; then echo $l; fi; done | sed \ 
-#  's#/home/nicolas/carino/out/staging/##g'
+# install in final, see useful_commands to see where this comes from
 installed_files='bin/gst-device-monitor-1.0
 	bin/gst-discoverer-1.0
 	bin/gst-play-1.0
 	lib/gstreamer-1.0/libgstadder.so
 	lib/gstreamer-1.0/libgstencodebin.so
 	lib/gstreamer-1.0/libgstgio.so
+	lib/gstreamer-1.0/libgstogg.so
 	lib/gstreamer-1.0/libgsttcp.so
+	lib/gstreamer-1.0/libgsttheora.so
 	lib/gstreamer-1.0/libgsttypefindfunctions.so
 	lib/gstreamer-1.0/libgstvideoconvert.so
 	lib/gstreamer-1.0/libgstvideorate.so
 	lib/gstreamer-1.0/libgstvideoscale.so
 	lib/gstreamer-1.0/libgstvideotestsrc.so
+	lib/gstreamer-1.0/libgstvorbis.so
 	lib/libgstallocators-1.0.so
 	lib/libgstallocators-1.0.so.0
 	lib/libgstallocators-1.0.so.0.403.0

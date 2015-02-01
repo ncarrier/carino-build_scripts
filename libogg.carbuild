@@ -1,0 +1,26 @@
+#!/bin/bash
+
+version=1.3.2
+src_dir=${PACKAGE_BUILD_DIR}/${PACKAGE_NAME}-${version}
+cd ${PACKAGE_BUILD_DIR}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.gz
+cd ${src_dir}
+
+# configure
+./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf \
+	--cache-file=${src_dir}/config.cache \
+	--disable-maintainer-mode \
+	--disable-static
+
+# do build
+make -j8 V=1
+make install
+
+# install .so and links in final
+mkdir -p ${FINAL_DIR}/lib
+cd ${STAGING_DIR}/lib
+
+shared_objects=$(ls ${PACKAGE_NAME}.* | egrep --invert-match '\.a$|\.o|\.la$')
+cp --archive --force --verbose ${shared_objects} ${FINAL_DIR}/lib/

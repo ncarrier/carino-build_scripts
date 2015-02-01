@@ -41,7 +41,7 @@ cd ${STAGING_DIR}/lib
 
 shared_objects=$(ls libgst*so* | egrep --invert-match '\.a$|\.o|\.la$')
 cp --archive --force --verbose ${shared_objects} ${FINAL_DIR}/lib/
-cp --archive --force --verbose gstreamer-1.0/libgstcoreelements.so ${FINAL_DIR}/lib/
+cp --archive --force --verbose gstreamer-1.0/libgstcoreelements.so ${FINAL_DIR}/lib/gstreamer-1.0/
 
 cd ${STAGING_DIR}/libexec/gstreamer-1.0
 cp --archive --force gst-plugin-scanner ${FINAL_DIR}/libexec/gstreamer-1.0

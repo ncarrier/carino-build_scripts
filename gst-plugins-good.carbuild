@@ -1,0 +1,120 @@
+#!/bin/bash
+
+version=1.4.3
+src_dir=${PACKAGE_BUILD_DIR}/${package_name}-${version}
+cd ${PACKAGE_BUILD_DIR}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${package_name}/${package_name}-${version}.tar.xz
+cd ${src_dir}
+
+# configure
+CPPFLAGS="${CPPFLAGS} -I${STAGING_DIR}/lib/libffi-3.2.1/include/" \
+./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf \
+	--config-cache \
+	--disable-maintainer-mode \
+	--disable-nls \
+	--disable-profiling \
+	--disable-valgrind \
+	--disable-gcov \
+	--disable-examples \
+	--disable-gtk-doc \
+	--disable-gtk-doc-html \
+	--disable-gtk-doc-pdf \
+	--enable-gobject-cast-checks=yes \
+	--enable-glib-asserts=yes \
+	--disable-orc \
+	--disable-alpha \
+	--disable-apetag \
+	--disable-audiofx \
+	--disable-audioparsers \
+	--disable-auparse \
+	--enable-autodetect \
+	--disable-avi \
+	--disable-cutter \
+	--enable-debugutils \
+	--disable-deinterlace \
+	--disable-dtmf \
+	--disable-effectv \
+	--disable-equalizer \
+	--disable-flv \
+	--disable-flx \
+	--disable-goom \
+	--disable-goom2k1 \
+	--disable-icydemux \
+	--disable-id3demux \
+	--disable-imagefreeze \
+	--disable-interleave \
+	--disable-isomp4 \
+	--disable-law \
+	--disable-level \
+	--disable-matroska \
+	--disable-monoscope \
+	--disable-multifile \
+	--disable-multipart \
+	--disable-replaygain \
+	--enable-rtp \
+	--enable-rtpmanager \
+	--enable-rtsp \
+	--disable-shapewipe \
+	--disable-smpte \
+	--disable-spectrum \
+	--enable-udp \
+	--disable-videobox \
+	--disable-videocrop \
+	--disable-videofilter \
+	--disable-videomixer \
+	--disable-wavenc \
+	--disable-wavparse \
+	--enable-y4m \
+	--disable-directsound \
+	--disable-waveform \
+	--disable-oss \
+	--disable-oss4 \
+	--disable-sunaudio \
+	--disable-osx_audio \
+	--disable-osx_video \
+	--enable-gst_v4l2 \
+	--disable-x \
+	--disable-xshm \
+	--disable-aalib \
+	--disable-aalibtest \
+	--disable-cairo \
+	--disable-flac \
+	--disable-gdk_pixbuf \
+	--disable-jack \
+	--disable-jpeg \
+	--disable-libcaca \
+	--disable-libdv \
+	--disable-libpng \
+	--disable-pulse \
+	--disable-dv1394 \
+	--disable-shout2 \
+	--disable-soup \
+	--disable-speex \
+	--disable-taglib \
+	--disable-vpx \
+	--disable-wavpack \
+	--disable-zlib \
+	--disable-bz2
+
+# do build
+make V=1 -j8
+make install
+
+# install in final, see useful_commands to see where this comes from
+installed_files='lib/gstreamer-1.0/libgstautodetect.so
+	lib/gstreamer-1.0/libgstdebug.so
+	lib/gstreamer-1.0/libgstnavigationtest.so
+	lib/gstreamer-1.0/libgstrtpmanager.so
+	lib/gstreamer-1.0/libgstrtp.so
+	lib/gstreamer-1.0/libgstrtsp.so
+	lib/gstreamer-1.0/libgstudp.so
+	lib/gstreamer-1.0/libgstvideo4linux2.so
+	lib/gstreamer-1.0/libgsty4menc.so'
+
+cd ${STAGING_DIR}
+for f in ${installed_files}; do
+	mkdir -p ${FINAL_DIR}/$(dirname $f)
+	cp --archive --force --verbose $f ${FINAL_DIR}/$f
+done

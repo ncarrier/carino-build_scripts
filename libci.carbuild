@@ -1,0 +1,20 @@
+#!/bin/bash
+
+rel_dest_dir=lib
+mkdir -p ${FINAL_DIR}/${rel_dest_dir} \
+	${STAGING_DIR}/${rel_dest_dir} \
+
+# do build
+cd ${PACKAGES_DIR}/${PACKAGE_NAME}
+${CC} \
+	${CFLAGS} -Werror \
+	${CPPFLAGS} -I ${PACKAGES_DIR}/${PACKAGE_NAME}/include \
+	-fpic -shared \
+	src/*.c \
+	${LDFLAGS} -pthread \
+	-o ${STAGING_DIR}/${rel_dest_dir}/${PACKAGE_NAME}.so
+
+# install
+cp -f ${STAGING_DIR}/${rel_dest_dir}/${PACKAGE_NAME}.so \
+	${FINAL_DIR}/${rel_dest_dir}/${PACKAGE_NAME}.so
+cp -rpf ${PACKAGES_DIR}/${PACKAGE_NAME}/include ${STAGING_DIR}

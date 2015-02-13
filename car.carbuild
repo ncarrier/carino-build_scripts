@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+dest_dir=${FINAL_DIR}/bin
+mkdir -p ${dest_dir}
+
+# do build, directly in final, there are no intermediate build files and nothing
+# produced is interesting for other packages
+cd ${PACKAGES_DIR}/${PACKAGE_NAME}
+${CXX} \
+	${CFLAGS} -Werror \
+	${CPPFLAGS} -I ${STAGING_DIR}/include/ \
+	car.cpp \
+	${LDFLAGS} -l arduino -l ci\
+	-std=gnu++11 \
+	-o ${dest_dir}/${PACKAGE_NAME}

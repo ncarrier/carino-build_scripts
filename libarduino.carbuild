@@ -10,7 +10,7 @@ ${CC} \
 	${CFLAGS} -Werror \
 	${CPPFLAGS} -I ${PACKAGES_DIR}/tests/libarduino/include \
 	-fpic -shared \
-	*.c \
+	*.c\
 	${LDFLAGS} -pthread \
 	-o ${STAGING_DIR}/${rel_dest_dir}/${PACKAGE_NAME}.so
 

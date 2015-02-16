@@ -1,34 +1,10 @@
 #!/bin/bash
 
-dest_dir=${FINAL_DIR}/sbin
-mkdir -p ${dest_dir}
+cd ${PACKAGE_BUILD_DIR}
 
-# do build, directly in final, there are no intermediate build files and nothing
-# produced is interesting for other packages
-cd ${PACKAGES_DIR}/adbd
-${TOOLCHAIN_PREFIX}-gcc \
-	${CFLAGS} \
-	${CPPFLAGS} -I . \
-	-DADB_HOST=0 -DHAVE_FORKEXEC \
-	-DHAVE_SYMLINKS -D_XOPEN_SOURCE -D_GNU_SOURCE \
-	adb.c \
-	fdevent.c \
-	transport.c \
-	transport_local.c \
-	transport_usb.c \
-	sockets.c \
-	services.c \
-	file_sync_service.c \
-	adb_config.c \
-	socket_local_server.c \
-	socket_loopback_server.c \
-	socket_loopback_client.c \
-	socket_local_client.c \
-	socket_inaddr_any_server.c \
-	framebuffer_service.c \
-	remount_service.c \
-	usb_linux_client.c \
-	utils.c \
-	-o ${dest_dir}/${PACKAGE_NAME} \
-	${LDFLAGS} \
-	-pthread
+# do build
+make -f ${PACKAGES_DIR}/adbd/Makefile VPATH=${PACKAGES_DIR}/adbd/
+
+# install the needed bits at the right place
+mkdir -p ${FINAL_DIR}/sbin
+cp adbd ${FINAL_DIR}/sbin/

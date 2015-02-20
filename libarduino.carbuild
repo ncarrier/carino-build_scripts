@@ -5,10 +5,10 @@ mkdir -p ${FINAL_DIR}/${rel_dest_dir} \
 	${STAGING_DIR}/${rel_dest_dir} \
 
 # do build
-cd ${PACKAGES_DIR}/tests/libarduino/src
+cd ${PACKAGES_DIR}/libarduino/src
 ${CC} \
 	${CFLAGS} -Werror \
-	${CPPFLAGS} -I ${PACKAGES_DIR}/tests/libarduino/include \
+	${CPPFLAGS} -I ${PACKAGES_DIR}/libarduino/include \
 	-fpic -shared \
 	*.c\
 	${LDFLAGS} -pthread \
@@ -17,4 +17,4 @@ ${CC} \
 # install
 cp -f ${STAGING_DIR}/${rel_dest_dir}/${PACKAGE_NAME}.so \
 	${FINAL_DIR}/${rel_dest_dir}/${PACKAGE_NAME}.so
-cp -rpf ${PACKAGES_DIR}/tests/libarduino/include ${STAGING_DIR}
+cp -rpf ${PACKAGES_DIR}/libarduino/include ${STAGING_DIR}

@@ -15,5 +15,6 @@ cd ${src_dir}
 # do build
 make -j8
 
-cp strace ${FINAL_DIR}/usr/bin/
+mkdir -p ${FINAL_DIR}/bin/
+cp strace ${FINAL_DIR}/bin/
 

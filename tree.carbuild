@@ -13,5 +13,5 @@ cd ${src_dir}
 make -j8
 
 # install in final
-mkdir -p ${FINAL_DIR}/usr/bin/
-cp tree ${FINAL_DIR}/usr/bin/
+mkdir -p ${FINAL_DIR}/bin/
+cp tree ${FINAL_DIR}/bin/

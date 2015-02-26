@@ -10,7 +10,8 @@ cd ${src_dir}
 
 # configure
 ./configure --prefix=${STAGING_DIR} --host=${TOOLCHAIN_PREFIX} \
-	--config-cache
+	--config-cache \
+	ac_cv_header_sys_reg_h=no
 
 # do build
 make -j8

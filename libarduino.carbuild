@@ -7,7 +7,7 @@ mkdir -p ${FINAL_DIR}/${rel_dest_dir} \
 # do build
 cd ${PACKAGES_DIR}/libarduino/src
 ${CC} \
-	${CFLAGS} -Werror \
+	${CFLAGS} -Werror -Wno-error=format-security\
 	${CPPFLAGS} -I ${PACKAGES_DIR}/libarduino/include \
 	-fpic -shared \
 	*.c\

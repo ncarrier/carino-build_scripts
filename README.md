@@ -126,3 +126,10 @@ Tree structure must be kept as simple as possible:
 * **/sys**: should stay empty, a protfs will be mounted there at startup.
 * **/tmp**: should stay empty, a protfs will be mounted there at startup.
 * **/var**: used by some packages at runtime.
+
+## License
+
+    This is part of the Carino project documentation.
+    Copyright (C) 2015
+      Nicolas CARRIER
+    See the file doc/README.md for copying conditions

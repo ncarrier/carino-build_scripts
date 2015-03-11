@@ -10,8 +10,8 @@ because they weren't useful by the time of packaging.
 For other details, please see the build.sh section of the README.md file for the
 carino-tools project.  
 A file in the build_scripts directory is considered a build script if it ends
-with **.carbuild**. It is considered a configuration script if it ends with
-**-config.carbuild**, the only difference is that no -dirclean target is handled
+with **.build**. It is considered a configuration script if it ends with
+**-config.build**, the only difference is that no -dirclean target is handled
 for a configuration script.
 
 ### Features

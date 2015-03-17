@@ -1,0 +1,18 @@
+#!/bin/bash
+
+mkdir -p ${FINAL_DIR}/var/www/clients/
+
+cd ${PACKAGES_DIR}/${PACKAGE_NAME}
+# updates the build.xml file for ant
+android update project --path .
+
+# cleaning is mandatory since previouseclipse builds can mess up things
+ant clean
+
+# do build the result will be placed in bin/CarinoSteeringWheel-debug.apk
+ant debug
+
+cd -
+
+cp ${PACKAGES_DIR}/${PACKAGE_NAME}/bin/CarinoSteeringWheel-debug.apk \
+	${FINAL_DIR}/var/www/clients/CarinoSteeringWheel.apk

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+mkdir -p ${FINAL_DIR}/var/www/
+
+cp --archive --force --verbose ${PACKAGES_DIR}/${PACKAGE_NAME}/* ${FINAL_DIR}/var/www/
+

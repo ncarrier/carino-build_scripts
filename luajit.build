@@ -1,0 +1,25 @@
+#!/bin/bash
+
+version=2.0.3
+src_dir=${PACKAGE_BUILD_DIR}/LuaJIT-${version}
+cd ${PACKAGE_BUILD_DIR}
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/LuaJIT-${version}.tar.gz
+cd ${src_dir}
+
+# do build
+make -j8 V=1 HOST_CC="gcc -m32" CROSS="${TOOLCHAIN_PREFIX}-"
+make install PREFIX="/" DESTDIR=${STAGING_DIR}
+
+# install .so and links in final
+mkdir -p ${FINAL_DIR}/lib
+mkdir -p ${FINAL_DIR}/bin
+
+cd ${STAGING_DIR}/lib
+shared_objects=$(ls libluajit-* | egrep --invert-match '\.a$|\.o|\.la$')
+cp --archive --force --verbose ${shared_objects} ${FINAL_DIR}/lib/
+cp --archive --force --verbose ${STAGING_DIR}/bin/luajit \
+	${FINAL_DIR}/bin/
+cp --archive --force --verbose ${STAGING_DIR}/bin/luajit-${version} \
+	${FINAL_DIR}/bin/

@@ -4,7 +4,7 @@ mkdir -p ${FINAL_DIR}/var/www/clients/
 
 cd ${PACKAGES_DIR}/${PACKAGE_NAME}
 # updates the build.xml file for ant
-android update project --path .
+${ANDROID_SDK}/tools/android update project --path .
 
 # cleaning is mandatory since previouseclipse builds can mess up things
 ant clean

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd ${PACKAGE_BUILD_DIR}
+ws_dir=${PACKAGES_DIR}/${PACKAGE_NAME}
+
+# do build
+make -f ${ws_dir}/other/Makefile VPATH=${ws_dir}/other/
+
+# install the needed bits at the right place
+mkdir -p ${FINAL_DIR}/sbin
+cp websockify ${FINAL_DIR}/sbin/

@@ -20,5 +20,5 @@ make install
 mkdir -p ${FINAL_DIR}/lib
 cd ${STAGING_DIR}/lib
 
-shared_objects=$(ls libffi.* | egrep --invert-match '\.a$|\.o|\.la$')
+shared_objects=$(ls ${PACKAGE_NAME}.* | egrep --invert-match '\.a$|\.o|\.la$')
 cp --archive --force --verbose ${shared_objects} ${FINAL_DIR}/lib/

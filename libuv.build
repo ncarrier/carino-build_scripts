@@ -1,0 +1,29 @@
+#!/bin/bash
+
+version=1.4.2
+src_dir=${PACKAGE_BUILD_DIR}/${PACKAGE_NAME}-${version}
+cd ${PACKAGE_BUILD_DIR}
+patch=${PACKAGES_DIR}/archives/${PACKAGE_NAME}/ran_autogen.patch
+
+# extract
+tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.gz
+cd ${src_dir}
+echo applying ${patch}
+patch --forward --strip=1 < ${patch} > /dev/null 2>&1 || true
+# patch doesn't preserve file permissions
+chmod +x compile config.guess config.sub configure depcomp install-sh missing
+
+# configure
+./configure --prefix=${STAGING_DIR} --host=arm-linux-gnueabihf \
+	--disable-static
+
+# do build
+make -j8 V=1
+make install
+
+# install .so and links in final
+mkdir -p ${FINAL_DIR}/lib
+cd ${STAGING_DIR}/lib
+
+shared_objects=$(ls ${PACKAGE_NAME}.* | egrep --invert-match '\.a$|\.o|\.la$')
+cp --archive --force --verbose ${shared_objects} ${FINAL_DIR}/lib/

@@ -102,7 +102,7 @@ CPPFLAGS="${CPPFLAGS} -I${STAGING_DIR}/lib/libffi-3.2.1/include/" \
 make V=1 -j8
 make install
 
-# install in final, see useful_commands to see where this comes from
+# install in final, built from gst-plugins-good.staging_files
 installed_files='lib/gstreamer-1.0/libgstautodetect.so
 	lib/gstreamer-1.0/libgstdebug.so
 	lib/gstreamer-1.0/libgstnavigationtest.so

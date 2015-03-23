@@ -42,7 +42,7 @@ CPPFLAGS="${CPPFLAGS} -I${STAGING_DIR}/lib/libffi-3.2.1/include/" \
 make V=1 -j8
 make install
 
-# install in final, see useful_commands to see where this comes from
+# install in final, built from gst-plugins-base.staging_files
 installed_files='bin/gst-device-monitor-1.0
 	bin/gst-discoverer-1.0
 	bin/gst-play-1.0

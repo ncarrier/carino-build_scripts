@@ -11,7 +11,7 @@ cd ${PACKAGES_DIR}/tests/${PACKAGE_NAME#tests_}
 ${CC} \
 	${CFLAGS} -Werror \
 	${CPPFLAGS} \
-	$(${TOOLCHAIN_PREFIX}-pkg-config gstreamer-1.0 glib-2.0 --libs --cflags) \
+	$(${PKG_CONFIG} gstreamer-1.0 glib-2.0 --libs --cflags) \
 	-I ${STAGING_DIR}/include/gstreamer-1.0 \
 	-I ${STAGING_DIR}/include/glib-2.0 \
 	-I ${STAGING_DIR}/lib/glib-2.0/include \

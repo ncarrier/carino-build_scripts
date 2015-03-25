@@ -10,7 +10,7 @@ mkdir -p ${dest_dir}
 cd ${PACKAGES_DIR}/tests/${PACKAGE_NAME#tests_}
 ${CC} \
 	${CFLAGS} -Werror \
-	${CPPFLAGS} -I ${STAGING_DIR}/include/ \
+	${CPPFLAGS} \
 	main.c \
 	${LDFLAGS} -l arduino \
 	-o ${dest_dir}/${PACKAGE_NAME}

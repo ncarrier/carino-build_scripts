@@ -10,11 +10,11 @@ mkdir -p ${dest_dir}
 cd ${PACKAGES_DIR}/tests/${PACKAGE_NAME#tests_}
 ${CC} \
 	${CFLAGS} -Werror \
-	${CPPFLAGS} -I ${STAGING_DIR}/include/ \
+	${CPPFLAGS} \
 	$(${TOOLCHAIN_PREFIX}-pkg-config gstreamer-1.0 glib-2.0 --libs --cflags) \
 	-I ${STAGING_DIR}/include/gstreamer-1.0 \
 	-I ${STAGING_DIR}/include/glib-2.0 \
 	-I ${STAGING_DIR}/lib/glib-2.0/include \
 	main.c \
-	${LDFLAGS} -l arduino \
+	${LDFLAGS} \
 	-o ${dest_dir}/${PACKAGE_NAME}

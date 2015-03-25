@@ -8,7 +8,7 @@ mkdir -p ${dest_dir}
 # do build, directly in final, there are no intermediate build files and nothing
 # produced is interesting for other packages
 cd ${PACKAGES_DIR}/tests/${PACKAGE_NAME#tests_}
-${TOOLCHAIN_PREFIX}-gcc \
+${CC} \
 	${CFLAGS} -Werror \
 	${CPPFLAGS} \
 	-I ${PACKAGES_DIR}/adbd/core/include \

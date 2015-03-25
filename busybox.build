@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # for updating the busybox configuration, just do :
-# cd out/build/busybox/build/
+# cd out/VEHICLE_NAME-debug/build/busybox/build
 # CROSS_COMPILE=arm-linux-gnueabihf- make KBUILD_SRC=../busybox-1.23.0/ \
 #      -f ../busybox-1.23.0/Makefile menuconfig
 # cp .config ~/carino/config/busybox_config

@@ -23,14 +23,15 @@ cd build
 cp ${CONFIG_DIR}/busybox_config .config
 
 # do build
-make CROSS_COMPILE=${TOOLCHAIN_PREFIX}- \
+[[ -v TOOLCHAIN_PREFIX ]] && cross="CROSS_COMPILE=${TOOLCHAIN_PREFIX}-"
+make ${cross} \
 	KBUILD_SRC=${src_dir} \
 	-f ${src_dir}/Makefile \
 	-j 8 \
 	CONFIG_PREFIX=${FINAL_DIR}
 
 # install the needed bits at the right place
-make CROSS_COMPILE=${TOOLCHAIN_PREFIX}- \
+make ${cross} \
 	KBUILD_SRC=${src_dir} \
 	-f ${src_dir}/Makefile \
 	-j 8 \

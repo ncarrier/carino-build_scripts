@@ -13,5 +13,5 @@ make CROSS_COMPILE=${TOOLCHAIN_PREFIX}- \
 
 # install the needed bits at the right place
 cp ${PACKAGE_BUILD_DIR}/u-boot-sunxi-with-spl.bin ${U_BOOT_DIR}/
-cp ${CONFIG_DIR}/uEnv.txt ${BOOT_DIR}/
+cp ${CONFIG_DIR}/${CARINO_VEHICLE}/uEnv.txt ${BOOT_DIR}/
 

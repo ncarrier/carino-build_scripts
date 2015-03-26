@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # use the versionned kernel configuration
-cp ${CONFIG_DIR}/kernel_config ${PACKAGE_BUILD_DIR}/.config
+cp ${CONFIG_DIR}/${CARINO_VEHICLE}/kernel_config ${PACKAGE_BUILD_DIR}/.config
 
 # do build
 cd ${PACKAGES_DIR}/${PACKAGE_NAME}

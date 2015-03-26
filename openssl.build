@@ -9,10 +9,14 @@ tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.g
 cd ${src_dir}
 
 # configure
+if [[ -v TOOLCHAIN_PREFIX ]]; then
 TARGETMACH=${TOOLCHAIN_PREFIX} \
 	CROSS=${TOOLCHAIN_PREFIX} \
 	./Configure linux-generic32 -DL_ENDIAN ${CFLAGS} shared \
-		--prefix=${STAGING_DIR}
+	--prefix=${STAGING_DIR}
+else
+	./config --prefix=${STAGING_DIR} shared
+fi
 
 # do build
 make

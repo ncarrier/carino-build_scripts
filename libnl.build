@@ -9,7 +9,8 @@ tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.g
 cd ${src_dir}
 
 # configure
-./configure --prefix=${STAGING_DIR} --host=${TOOLCHAIN_PREFIX} \
+[[ -v TOOLCHAIN_PREFIX ]] && cross="--host=${TOOLCHAIN_PREFIX}"
+./configure --prefix=${STAGING_DIR} ${cross} \
 	--config-cache \
 	--disable-cli \
 	--disable-static \

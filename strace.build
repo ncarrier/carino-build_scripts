@@ -9,9 +9,9 @@ tar xf ${PACKAGES_DIR}/archives/${PACKAGE_NAME}/${PACKAGE_NAME}-${version}.tar.x
 cd ${src_dir}
 
 # configure
-./configure --prefix=${STAGING_DIR} --host=${TOOLCHAIN_PREFIX} \
-	--config-cache \
-	ac_cv_header_sys_reg_h=no
+[[ -v TOOLCHAIN_PREFIX ]] && cross="--host=${TOOLCHAIN_PREFIX}"
+./configure --prefix=${STAGING_DIR} ${cross} \
+	--config-cache
 
 # do build
 make -j8

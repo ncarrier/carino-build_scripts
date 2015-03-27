@@ -5,16 +5,11 @@ cp ${CONFIG_DIR}/${CARINO_VEHICLE}/kernel_config ${PACKAGE_BUILD_DIR}/.config
 
 # do build
 cd ${PACKAGES_DIR}/${PACKAGE_NAME}
-ARCH=arm CROSS_COMPILE=${TOOLCHAIN_PREFIX}- \
-	LOADADDR=0x40008000 \
-	INSTALL_MOD_PATH=${FINAL_DIR}/ \
-	make uImage dtbs modules O=${PACKAGE_BUILD_DIR} -j 8
-ARCH=arm CROSS_COMPILE=${TOOLCHAIN_PREFIX}- \
-	LOADADDR=0x40008000 \
-	INSTALL_MOD_PATH=${FINAL_DIR}/ \
-	make modules_install O=${PACKAGE_BUILD_DIR} -j 8
+echo INSTALL_MOD_PATH=${FINAL_DIR}/ ${KERNEL_EXTRA_ENV} make ${KERNEL_TARGETS} O=${PACKAGE_BUILD_DIR} -j 8 | sh
 
 # install the needed bits at the right place
-cp ${PACKAGE_BUILD_DIR}/arch/arm/boot/dts/sun7i-a20-pcduino3.dtb ${BOOT_DIR}/
-cp ${PACKAGE_BUILD_DIR}/arch/arm/boot/uImage ${BOOT_DIR}/
+if [[ -v TOOLCHAIN_PREFIX ]]; then
+	cp ${PACKAGE_BUILD_DIR}/arch/arm/boot/dts/sun7i-a20-pcduino3.dtb ${BOOT_DIR}/
+	cp ${PACKAGE_BUILD_DIR}/arch/arm/boot/uImage ${BOOT_DIR}/
+fi
 

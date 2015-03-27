@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cd ${PACKAGES_DIR}/${PACKAGE_NAME}
-ARCH=arm CROSS_COMPILE=${TOOLCHAIN_PREFIX}- \
-	make xconfig O=${PACKAGE_BUILD_DIR} -j 8
+new_config=${CONFIG_DIR}/${CARINO_VEHICLE}/kernel_config
+cd ${PACKAGES_DIR}/linux
+echo ${KERNEL_EXTRA_ENV} make xconfig O=${PACKAGE_BUILD_DIR} -j 8 | sh
 
-cp ${PACKAGE_BUILD_DIR}/.config ${CONFIG_DIR}/kernel_config
-echo new kernel config stored in ${CONFIG_DIR}/kernel_config
+cp ${PACKAGE_BUILD_DIR}/.config ${new_config}
+echo "new kernel config stored in ${new_config}"
 
